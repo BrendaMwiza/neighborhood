@@ -12,7 +12,7 @@ class Neighborhood(models.Model):
     location = models.CharField(max_length=30)
     number = models.IntegerField(default=0,blank=True) 
     
-    def create_neighborhood(self):
+    def save_neighborhood(self):
         self.save()
       
     def delete_neighborhood(self):
@@ -32,23 +32,16 @@ class Profile(models.Model):
     email = models.EmailField(max_length=300)
     neighborhood = models.ForeignKey(Neighborhood,null=True) 
     
-    @receiver(post_save, sender=User)
-    def create_profile(sender, instance, created, **kwargs):
-        if created:
-            Profile.objects.create(user=instance)
-     
-    @receiver(post_save, sender=User) 
-    def save_profile(sender,instance,**kwargs):
-        instance.profile.save() 
-        
-        
+    def save_profile(self):
+        self.save() 
+
     @classmethod
     def get_by_id(cls,id):
         profile = Profile.objects.get(user = id)
         return profile
     
     @classmethod
-    def filter_by_id(cls,id): 
+    def get_by_id(cls,id): 
         profile = Profile.objects.filter(user = id).first()
         return profile
      
@@ -64,7 +57,7 @@ class Business(models.Model):
     location = models.ForeignKey(Neighborhood,on_delete=models.CASCADE) 
     user = models.ForeignKey(User,on_delete=models.CASCADE) 
     
-    def create_business(self):
+    def save_business(self):
         self.save()
       
     def delete_business(self):
@@ -84,7 +77,7 @@ class Business(models.Model):
    
    
     @classmethod
-    def get_businessesprofile(cls,user):
+    def get_business_profile(cls,user):
        business = Business.objects.filter(user__pk=user)
        return business
     
@@ -122,4 +115,4 @@ class Contact(models.Model):
         return contact
     
     def __str__(self):
-        return self.
+        return self.name
