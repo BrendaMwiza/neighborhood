@@ -64,7 +64,7 @@ class Business(models.Model):
         self.delete()
         
     @classmethod
-    def search_by_business(cls,search_term):
+    def search_business(cls,search_term):
         busy = cls.objects.filter(business__icontains=busy)
         return busy
     
