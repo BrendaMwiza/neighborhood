@@ -8,8 +8,8 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Neighborhood(models.Model):
     image = models.ImageField(upload_to='pictures/')
-    name = models.CharField(max_length=30)
-    location = models.CharField(max_length=30)
+    name = models.CharField(max_length=300)
+    location = models.CharField(max_length=300)
     number = models.IntegerField(default=0,blank=True) 
     
     def save_neighborhood(self):
@@ -28,9 +28,11 @@ class Neighborhood(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    name = models.CharField(max_length=30)
-    email = models.EmailField(max_length=300)
-    neighborhood = models.ForeignKey(Neighborhood,null=True) 
+    name = models.CharField(max_length=20)
+    boi = models.TextField(max_length=300,null=True)
+    location = models.ForeignKey(Neighborhood,on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='profiles/')
+    
     
     def save_profile(self):
         self.save() 
@@ -47,12 +49,12 @@ class Profile(models.Model):
      
         
     def __str__(self):
-        return self.title
+        return self.name
     
 class Business(models.Model):
-    owner_business = models.CharField(max_length=30)
-    business = models.CharField(max_length=100)
-    email = models.EmailField(max_length=100)
+    owner_business = models.CharField(max_length=300)
+    business = models.CharField(max_length=300)
+    email = models.EmailField(max_length=200)
     description = models.TextField(max_length=200)
     location = models.ForeignKey(Neighborhood,on_delete=models.CASCADE) 
     user = models.ForeignKey(User,on_delete=models.CASCADE) 
@@ -85,8 +87,8 @@ class Business(models.Model):
         return self.owner_business
     
 class Post(models.Model):
-    title = models.CharField(max_length=60)
-    content = models.TextField(max_length=100) 
+    title = models.CharField(max_length=30)
+    content = models.TextField(max_length=200) 
     location = models.ForeignKey(Neighborhood,on_delete=models.CASCADE)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
    
@@ -104,9 +106,9 @@ class Post(models.Model):
         return self.title
     
 class Contact(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=300)
     number = models.IntegerField()
-    email = models.EmailField(max_length=100)
+    email = models.EmailField(max_length=200)
     location = models.ForeignKey(Neighborhood,on_delete=models.CASCADE)
     
     @classmethod
