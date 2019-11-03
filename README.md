@@ -3,7 +3,7 @@
 ## By **Brenda Mwiza**
 
 ## Link to live site
-You can view the site here >>
+You can view the site here >> https://myhoodies.herokuapp.com
 
 ## Description
 This is an application that was designed  to allow users to know about what happens in their neighborhood.and also see local buisnesses that are located there.
